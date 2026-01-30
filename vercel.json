@@ -2,6 +2,11 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "functions": {
+    "api/**/*.js": {
+      "includeFiles": "src/generated/**"
+    }
+  }
 }
 
