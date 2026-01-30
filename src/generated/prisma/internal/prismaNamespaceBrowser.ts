@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  SqlConcept: 'SqlConcept',
+  ConceptSection: 'ConceptSection',
+  CodeExample: 'CodeExample',
+  DemoConfig: 'DemoConfig',
+  Question: 'Question'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,12 +87,76 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const SqlConceptScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SqlConceptScalarFieldEnum = (typeof SqlConceptScalarFieldEnum)[keyof typeof SqlConceptScalarFieldEnum]
+
+
+export const ConceptSectionScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  content: 'content',
+  icon: 'icon',
+  type: 'type',
+  conceptId: 'conceptId'
+} as const
+
+export type ConceptSectionScalarFieldEnum = (typeof ConceptSectionScalarFieldEnum)[keyof typeof ConceptSectionScalarFieldEnum]
+
+
+export const CodeExampleScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  code: 'code',
+  conceptId: 'conceptId'
+} as const
+
+export type CodeExampleScalarFieldEnum = (typeof CodeExampleScalarFieldEnum)[keyof typeof CodeExampleScalarFieldEnum]
+
+
+export const DemoConfigScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  description: 'description',
+  columns: 'columns',
+  sampleData: 'sampleData',
+  conceptId: 'conceptId'
+} as const
+
+export type DemoConfigScalarFieldEnum = (typeof DemoConfigScalarFieldEnum)[keyof typeof DemoConfigScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  question: 'question',
+  options: 'options',
+  correctIndex: 'correctIndex',
+  explanation: 'explanation',
+  conceptId: 'conceptId'
+} as const
+
+export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -104,4 +173,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

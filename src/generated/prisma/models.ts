@@ -9,4 +9,9 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.ts'
+export type * from './models/SqlConcept.ts'
+export type * from './models/ConceptSection.ts'
+export type * from './models/CodeExample.ts'
+export type * from './models/DemoConfig.ts'
+export type * from './models/Question.ts'
 export type * from './commonInputTypes.ts'

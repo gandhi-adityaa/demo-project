@@ -9,7 +9,9 @@
 * 🟢 You can import this file directly.
 */
 
+export const SectionType = {
+  CONCEPT: 'CONCEPT',
+  ANALYSIS: 'ANALYSIS'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type SectionType = (typeof SectionType)[keyof typeof SectionType]

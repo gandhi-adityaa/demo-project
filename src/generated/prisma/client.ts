@@ -44,3 +44,28 @@ export { Prisma }
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model SqlConcept
+ * 
+ */
+export type SqlConcept = Prisma.SqlConceptModel
+/**
+ * Model ConceptSection
+ * 
+ */
+export type ConceptSection = Prisma.ConceptSectionModel
+/**
+ * Model CodeExample
+ * 
+ */
+export type CodeExample = Prisma.CodeExampleModel
+/**
+ * Model DemoConfig
+ * 
+ */
+export type DemoConfig = Prisma.DemoConfigModel
+/**
+ * Model Question
+ * 
+ */
+export type Question = Prisma.QuestionModel

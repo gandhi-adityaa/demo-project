@@ -21,3 +21,65 @@ model User {
   updatedAt DateTime @updatedAt
   test      String?
 }
+
+model SqlConcept {
+  id        String   @id // e.g., 'tutorial_intro'
+  title     String
+  icon      String
+ 
+  // Relations
+  sections  ConceptSection[]
+  examples  CodeExample[]
+  demo      DemoConfig?
+  questions Question[]
+ 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+ 
+enum SectionType {
+  CONCEPT   // For items in conceptsTab
+  ANALYSIS  // For items in analysisTab
+}
+ 
+model ConceptSection {
+  id        String      @id @default(uuid())
+  title     String
+  content   String      @db.Text
+  icon      String
+  type      SectionType
+ 
+  conceptId String
+  concept   SqlConcept  @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+ 
+model CodeExample {
+  id        String     @id @default(uuid())
+  title     String
+  code      String     @db.Text
+ 
+  conceptId String
+  concept   SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+ 
+model DemoConfig {
+  id          String   @id @default(uuid())
+  type        String   // e.g., 'table_only'
+  description String
+  columns     Json     // Stores: ['id', 'title', 'author', ...]
+  sampleData  Json     // Stores: [{'id': '1', 'title': '...'}, ...]
+ 
+  conceptId   String   @unique
+  concept     SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}
+ 
+model Question {
+  id           String   @id @default(uuid())
+  question     String
+  options      Json     // Stores: ['Option A', 'Option B', ...]
+  correctIndex Int
+  explanation  String   @db.Text
+ 
+  conceptId    String
+  concept      SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)
+}

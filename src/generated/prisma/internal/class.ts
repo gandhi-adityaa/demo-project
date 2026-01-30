@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  test      String?\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id        String   @id @default(uuid())\n  email     String   @unique\n  password  String\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  test      String?\n}\n\nmodel SqlConcept {\n  id    String @id // e.g., 'tutorial_intro'\n  title String\n  icon  String\n\n  // Relations\n  sections  ConceptSection[]\n  examples  CodeExample[]\n  demo      DemoConfig?\n  questions Question[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nenum SectionType {\n  CONCEPT // For items in conceptsTab\n  ANALYSIS // For items in analysisTab\n}\n\nmodel ConceptSection {\n  id      String      @id @default(uuid())\n  title   String\n  content String      @db.Text\n  icon    String\n  type    SectionType\n\n  conceptId String\n  concept   SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)\n}\n\nmodel CodeExample {\n  id    String @id @default(uuid())\n  title String\n  code  String @db.Text\n\n  conceptId String\n  concept   SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)\n}\n\nmodel DemoConfig {\n  id          String @id @default(uuid())\n  type        String // e.g., 'table_only'\n  description String\n  columns     Json // Stores: ['id', 'title', 'author', ...]\n  sampleData  Json // Stores: [{'id': '1', 'title': '...'}, ...]\n\n  conceptId String     @unique\n  concept   SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)\n}\n\nmodel Question {\n  id           String @id @default(uuid())\n  question     String\n  options      Json // Stores: ['Option A', 'Option B', ...]\n  correctIndex Int\n  explanation  String @db.Text\n\n  conceptId String\n  concept   SqlConcept @relation(fields: [conceptId], references: [id], onDelete: Cascade)\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"test\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"test\",\"kind\":\"scalar\",\"type\":\"String\"}],\"dbName\":null},\"SqlConcept\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sections\",\"kind\":\"object\",\"type\":\"ConceptSection\",\"relationName\":\"ConceptSectionToSqlConcept\"},{\"name\":\"examples\",\"kind\":\"object\",\"type\":\"CodeExample\",\"relationName\":\"CodeExampleToSqlConcept\"},{\"name\":\"demo\",\"kind\":\"object\",\"type\":\"DemoConfig\",\"relationName\":\"DemoConfigToSqlConcept\"},{\"name\":\"questions\",\"kind\":\"object\",\"type\":\"Question\",\"relationName\":\"QuestionToSqlConcept\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"ConceptSection\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"content\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"icon\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"SectionType\"},{\"name\":\"conceptId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"concept\",\"kind\":\"object\",\"type\":\"SqlConcept\",\"relationName\":\"ConceptSectionToSqlConcept\"}],\"dbName\":null},\"CodeExample\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"code\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conceptId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"concept\",\"kind\":\"object\",\"type\":\"SqlConcept\",\"relationName\":\"CodeExampleToSqlConcept\"}],\"dbName\":null},\"DemoConfig\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"columns\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"sampleData\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"conceptId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"concept\",\"kind\":\"object\",\"type\":\"SqlConcept\",\"relationName\":\"DemoConfigToSqlConcept\"}],\"dbName\":null},\"Question\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"question\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"options\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"correctIndex\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"explanation\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"conceptId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"concept\",\"kind\":\"object\",\"type\":\"SqlConcept\",\"relationName\":\"QuestionToSqlConcept\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -185,6 +185,56 @@ export interface PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.sqlConcept`: Exposes CRUD operations for the **SqlConcept** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SqlConcepts
+    * const sqlConcepts = await prisma.sqlConcept.findMany()
+    * ```
+    */
+  get sqlConcept(): Prisma.SqlConceptDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.conceptSection`: Exposes CRUD operations for the **ConceptSection** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ConceptSections
+    * const conceptSections = await prisma.conceptSection.findMany()
+    * ```
+    */
+  get conceptSection(): Prisma.ConceptSectionDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.codeExample`: Exposes CRUD operations for the **CodeExample** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CodeExamples
+    * const codeExamples = await prisma.codeExample.findMany()
+    * ```
+    */
+  get codeExample(): Prisma.CodeExampleDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.demoConfig`: Exposes CRUD operations for the **DemoConfig** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DemoConfigs
+    * const demoConfigs = await prisma.demoConfig.findMany()
+    * ```
+    */
+  get demoConfig(): Prisma.DemoConfigDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.question`: Exposes CRUD operations for the **Question** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Questions
+    * const questions = await prisma.question.findMany()
+    * ```
+    */
+  get question(): Prisma.QuestionDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {
