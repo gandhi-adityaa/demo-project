@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "node server.js",
-    "build": "node node_modules/vite/bin/vite.js build",
+    "build": "prisma generate && node node_modules/vite/bin/vite.js build",
+    "postinstall": "prisma generate",
     "lint": "eslint .",
     "preview": "vite preview"
   },
