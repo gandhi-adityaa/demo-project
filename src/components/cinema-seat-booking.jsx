@@ -129,7 +129,7 @@ const CinemaSeatBooking = ({
 
   const getSeatClassName = (seat) => {
     const baseClass =
-      "w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 m-1 rounded-t-lg cursor-pointer transition-all duration-200 flex items-center justify-center text-xs sm:text-sm font-bold border-2 border-blue-300 text-blue-800 bg-blue-100";
+      "w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 m-1 rounded-t-lg cursor-pointer transition-all duration-200 flex items-center justify-center text-xs sm:text-sm font-bold border-2";
     if (seat.status === "booked") {
       return `${baseClass} bg-gray-400 border-gray-500 text-gray-600 cursor-not-allowed`;
     }
